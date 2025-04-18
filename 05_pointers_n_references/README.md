@@ -54,3 +54,79 @@ unsigned long long *p3 {nullptr};
 vector<string> *p4 {nullptr};
 string *p5 {nullptr};
 ```
+
+# Potential Pointer Pitfalls
+
+- Uninitialized pointers
+- Dangling Pointers
+- Not checking if new failed to allocate memory
+- Leaking memory
+
+# What is a Reference?
+
+- An alias for a variable
+- Must be initialized to a variable when declared
+- Cannot be null
+- Once initialized cannot be made to refer to a different variable
+- Very useful as function parameters
+- Might be helpful to think of a reference as a constant pointer that is automatically dereferenced
+
+# l-values
+
+- l-values
+  - values that have names and are addressable
+  - modifiable if they are not constants
+
+```cpp
+int x {100}; // x is an l-value
+x = 1000;
+x = 1000 + 20;
+
+string name; // name is an l-value
+name = "James";
+```
+
+# r-values
+
+- r-values (non-addressable and non-assignable)
+  - A value that's not an l-value
+    - on the right-hand side of an assignment expression
+    - a literal
+    - a temporary which is intended to be non-modifiable
+
+```cpp
+int x {100};     // 100 is an r-value
+int y = x + 200; // (x + 200) is an r-value
+
+string name;
+name = "James"; // "James" is an r-value
+
+int max_num = max(20, 30); // max(20, 30) is an r-value
+```
+
+# l-value references
+
+- The references we've used are l-value references
+  - Because we are referencing l-values
+
+```cpp
+int x {100};
+
+int &ref1 = x; // ref1 is reference to l-value
+ref1 = 1000;
+
+int &ref2 = 100; // Error 100 is an r-value
+```
+
+```cpp
+int square(int &n)
+{
+  return n*n;
+}
+
+int num {10};
+
+square(num); // OK
+
+square(5);   // Error - can't reference r-value 5 (because 5 is literal)
+```
